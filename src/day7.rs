@@ -34,13 +34,12 @@ pub fn get_children_to_parents(inp: &String) -> ChildrenToParents {
 
 pub fn get_parents_to_children(inp: &String) -> ParentsToChildren {
     let mut map = HashMap::new();
-    let rules = parse_input(inp); 
+    let rules = parse_input(inp);
     for rule in rules.into_iter() {
         map.insert(rule.0, rule.1);
     }
     map
 }
-
 
 #[aoc(day7, part1)]
 pub fn solve_part1(input: &String) -> usize {
@@ -50,30 +49,30 @@ pub fn solve_part1(input: &String) -> usize {
 
 #[aoc(day7, part2)]
 pub fn solve_part2(input: &String) -> i32 {
-    get_child_count_recursive(&get_parents_to_children(input), &("shiny".to_owned(), "gold".to_owned()) )
+    get_child_count_recursive(
+        &get_parents_to_children(input),
+        &("shiny".to_owned(), "gold".to_owned()),
+    )
 }
-
-
 
 fn parse_rule(rule: &str) -> Rule {
     let mut parts = rule.split("contain");
     let parent = parse_bag(parts.next().unwrap());
     let children = parts.next().unwrap();
     if children.contains("no other") {
-        return (parent, vec![])
+        return (parent, vec![]);
     }
-    let children_bags = children.split(',').map(|child| {
-        parse_child_bag(child)
-    }).collect::<Vec<_>>();
+    let children_bags = children
+        .split(',')
+        .map(|child| parse_child_bag(child))
+        .collect::<Vec<_>>();
     (parent, children_bags)
-
 }
 
 pub fn unique<T: Eq + std::hash::Hash>(vals: Vec<T>) -> HashMap<T, usize> {
     let mut map = HashMap::new();
     for val in vals.into_iter() {
         *map.entry(val).or_insert(0) += 1;
-        
     }
     map
 }
@@ -91,7 +90,9 @@ fn get_parents_recursive(map: &ChildrenToParents, value: &String) -> Vec<String>
 
 fn get_child_count_recursive(map: &ParentsToChildren, value: &Bag) -> i32 {
     let a = map.get(value).unwrap();
-    a.iter().map(|(count , bag )| count * (get_child_count_recursive(map, bag) + 1)).sum()
+    a.iter()
+        .map(|(count, bag)| count * (get_child_count_recursive(map, bag) + 1))
+        .sum()
 }
 
 fn parse_bag(name: &str) -> Bag {
@@ -103,14 +104,13 @@ fn parse_child_bag(name: &str) -> ChildBag {
     let count = parts.next().unwrap();
     let count = match count.parse::<i32>() {
         Ok(v) => v,
-        Err(_) => panic!("{} {}", name, count)
+        Err(_) => panic!("{} {}", name, count),
     };
     (count, (parts.next().unwrap(), parts.next().unwrap()))
 }
 fn repr(bag: &Bag) -> String {
     format!("{} {}", bag.0, bag.1)
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -10,16 +10,16 @@ pub fn solve_part1(input: &[String]) -> i32 {
     id_list[id_list.len() - 1]
 }
 
-#[aoc(day5,part2)]
+#[aoc(day5, part2)]
 pub fn solve_part2(input: &[String]) -> i32 {
     let mut id_list: Vec<_> = input.iter().map(|x| get_id(x.as_str())).collect();
     id_list.sort();
-    for i in 1..id_list.len()-1 {
+    for i in 1..id_list.len() - 1 {
         let current = id_list[i];
-        let next = id_list[i+1];
+        let next = id_list[i + 1];
         if (next - current) != 1 {
             //current is the one that has a gap after it, so add 1
-            return current+1;
+            return current + 1;
         }
     }
     panic!("Not found");
@@ -61,10 +61,10 @@ pub fn get_id(input: &str) -> i32 {
 #[cfg(test)]
 pub mod tests {
     const CASES: [(&'static str, i32); 4] = [
-        ("FBFBBFFRLR",357),
-        ("BFFFBBFRRR",567),
-        ("FFFBBBFRRR",119),
-        ("BBFFBBFRLL",820)
+        ("FBFBBFFRLR", 357),
+        ("BFFFBBFRRR", 567),
+        ("FFFBBBFRRR", 119),
+        ("BBFFBBFRLL", 820),
     ];
     #[test]
     fn get_id_test() {
@@ -76,7 +76,10 @@ pub mod tests {
     }
     #[test]
     fn get_max_id() {
-        let cases = CASES.iter().map(|(val, _)| (*val).to_owned()).collect::<Vec<_>>();
+        let cases = CASES
+            .iter()
+            .map(|(val, _)| (*val).to_owned())
+            .collect::<Vec<_>>();
         assert_eq!(super::solve_part1(&cases), 820);
     }
 }

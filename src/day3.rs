@@ -45,16 +45,10 @@ pub fn solve_scenario(input: &Map, dx: usize, dy: usize) -> usize {
 
 #[aoc(day3, part2)]
 pub fn solve_part2(input: &Map) -> usize {
-   let scenarios: Vec<(usize, usize)> = vec![
-       (1,1),
-       (3,1),
-       (5,1),
-       (7,1),
-       (1,2),
-   ];
-   let mut product = 1;
-   for scenario in scenarios {
-       product *= solve_scenario(input, scenario.0, scenario.1);
-   }
-   product
+    let scenarios: Vec<(usize, usize)> = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+    let mut product = 1;
+    for scenario in scenarios {
+        product *= solve_scenario(input, scenario.0, scenario.1);
+    }
+    product
 }
