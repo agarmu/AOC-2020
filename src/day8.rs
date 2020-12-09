@@ -72,7 +72,7 @@ impl VM {
             use Instruction::*;
             let instruction = &mut self.instructions[self.ptr];
             match instruction {
-                (inst, true) => {
+                (_, true) => {
                    // println!("Terminated at {}: {:?}\tACC = {}", self.ptr, inst, self.acc);
                     return false;
                 }
